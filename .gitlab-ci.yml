@@ -2,36 +2,24 @@ image: node:18
 
 stages:
   - install
-  - build
   - deploy
-
-cache:
-  paths:
-    - node_modules/
 
 install:
   stage: install
   script:
     - npm ci
 
-build:
-  stage: build
+pages:
+  stage: deploy
   script:
+    - npm install
     - npm run build
   artifacts:
     paths:
       - out
-
-pages:
-  stage: deploy
-  script:
-    - rm -rf public
-    - mv out public
-  artifacts:
-    paths:
-      - public
   cache:
     paths:
       - node_modules
+  publish: out
   only:
     - main
