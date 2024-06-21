@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   output: "export",
   trailingSlash: true,
-  assetPrefix: process.env.NODE_ENV === "production" ? "./kanban-frontend" : "", 
+  assetPrefix: process.env.NODE_ENV === "production" ? "./" : "", 
 };
 
 export default nextConfig;
