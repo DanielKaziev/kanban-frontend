@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  trailingSlash: true,
+  reactStrictMode: true,
   output: "export",
-  assetPrefix: "/<GITLAB_PROJECT_NAME>"
+  assetPrefix: process.env.NODE_ENV === "production" ? "/<GITLAB_PROJECT_NAME>" : "", 
 };
 
 export default nextConfig;
