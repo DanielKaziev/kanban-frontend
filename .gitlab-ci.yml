@@ -25,6 +25,7 @@ build:
 pages:
   stage: deploy
   script:
+    - rm -rf public
     - mv out public
   artifacts:
     paths:
