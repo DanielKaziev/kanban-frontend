@@ -2,7 +2,7 @@
 const nextConfig = {
   trailingSlash: true,
   output: "export",
-  assetPrefix: "./"
+  assetPrefix: "/<GITLAB_PROJECT_NAME>"
 };
 
 export default nextConfig;
