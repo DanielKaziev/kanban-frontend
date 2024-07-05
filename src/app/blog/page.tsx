@@ -1,4 +1,4 @@
 const Blog = () => {
-    return <>Hello World</>
+    return <>Hello Worldds</>
 }
 export default Blog;
