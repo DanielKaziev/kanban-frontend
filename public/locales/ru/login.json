@@ -1,0 +1,15 @@
+{
+  "I18N_LOGIN_FORM": "Войти",
+  "I18N_LOGIN": "Вход",
+  "I18N_REGISTER": "Регистрация",
+  "I18N_LOGIN_FORM_USERNAME": "Введите корректный ИИН",
+  "I18N_IIN": "ИИН",
+  "I18N_PASSWORD": "Пароль",
+  "I18N_EMAIL": "Почта",
+  "I18N_USERNAME": "Имя пользователя",
+  "I18N_REG_FORM": "Зарегистрироваться",
+  "I18N_LOGIN_FORM_FIELD_EMAIL": "Введите корректную почту",
+  "I18N_FIELD_PASSWORD": "Введите корректный пароль",
+  "I18N_PAGE_NOT_FOUND": " Извините, страница не найдена",
+  "I18N_RETURN_TO_MAIN_LINK": "Вернуться на главную страницу"
+}
