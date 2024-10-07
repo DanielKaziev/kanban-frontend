@@ -16,7 +16,7 @@ export const LoginPaper = styled(Box)(({ theme }) => ({
   justifyContent: "start",
   flexDirection: "column",
   width: "600px",
-  height: "450px",
+  // height: "450px",
   border: `1px solid ${theme.palette.grey[300]}`,
   backgroundColor: "white",
   borderRadius: "8px",

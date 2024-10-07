@@ -26,7 +26,7 @@ const PageLinks: FC<IPageLinksProps> = ({ link, onClick }) => {
     <Typography
       variant="h6"
       onClick={() => onClick(link.to)}
-      sx={{ fontSize: "14px" }}
+      sx={{ fontSize: "1rem", marginTop: "15px" }}
     >
       <StyledLink to={link.to}>{link.label}</StyledLink>
     </Typography>

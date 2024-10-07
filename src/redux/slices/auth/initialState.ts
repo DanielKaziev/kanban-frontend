@@ -2,15 +2,10 @@ import Config from "../../../config/Config";
 import { IAuthInitState } from "./types";
 
 export const DEFAULT: IAuthInitState = {
+  id: "",
   email: "",
-  firstName: "",
-  hospital: {},
-  hospitalId: '',
-  id: '',
-  iin: '',
-  lastName: '',
-  roleName: '',
-  secondName: '',
+  username: "",
+  roleName: "",
   isAuth: false,
 };
 

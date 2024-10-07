@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import initialState, { DEFAULT } from "./initialState";
-import { IToken } from "../../../types/token";
+import { ITokenData } from "../../../types/token";
 import tokenApi from "../../../services/token";
 import { IAuthInitState } from "./types";
-import Config from "../../../config/Config";
+import { jwtDecode } from "jwt-decode";
 
 const clearTokenStateReducer = (state: IAuthInitState) => {
   localStorage.removeItem("accessToken");
@@ -18,24 +18,33 @@ const clearTokenStateReducer = (state: IAuthInitState) => {
 
 const writeTokenReducer = (
   state: IAuthInitState,
-  { payload }: { payload: IToken }
+  { payload }: { payload: ITokenData }
 ) => {
-  localStorage.setItem("accessToken", payload.tokenData.accessToken);
-  localStorage.setItem("refreshToken", payload.tokenData.refreshToken);
-  if (!payload.user.roleName) {
-    payload.user.roleName = Config.Roles.PATIENT
-  }
-  localStorage.setItem("user", JSON.stringify(payload.user))
-  
-  Object.keys(payload.user).forEach((key) => {
-    state[key] = payload.user[key];
-  });
-
-  if (!state.roleName) {
-    state.roleName = Config.Roles.PATIENT
-  }
-
+  localStorage.setItem("accessToken", payload.accessToken);
+  localStorage.setItem("refreshToken", payload.refreshToken);
+  const token = payload.accessToken
+  const {id, email, username } = jwtDecode(token) as IAuthInitState
+  state.id = id
+  state.email = email
+  state.username = username
   state.isAuth = true;
+  state.roleName = "User"
+  
+
+  // if (!payload.user.roleName) {
+  //   payload.user.roleName = Config.Roles.PATIENT
+  // }
+  // localStorage.setItem("user", JSON.stringify(payload.user))
+  
+  // Object.keys(payload.user).forEach((key) => {
+  //   state[key] = payload.user[key];
+  // });
+
+  // if (!state.roleName) {
+  //   state.roleName = Config.Roles.PATIENT
+  // }
+
+
 };
 
 export const slice = createSlice({
@@ -49,7 +58,7 @@ export const slice = createSlice({
     builder
       .addMatcher(tokenApi.endpoints.login.matchFulfilled, writeTokenReducer)
       .addMatcher(tokenApi.endpoints.refresh.matchFulfilled, writeTokenReducer)
-      .addMatcher(tokenApi.endpoints.loginStuff.matchFulfilled, writeTokenReducer)
+      .addMatcher(tokenApi.endpoints.register.matchFulfilled, writeTokenReducer)
       .addMatcher(
         tokenApi.endpoints.logout.matchFulfilled,
         clearTokenStateReducer

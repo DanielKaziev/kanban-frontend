@@ -17,28 +17,9 @@ export type TPathEntry = {
 const PATHS: Array<TPathEntry> = [
   {
     component: LazyHospitals,
-    path: "/hospitals",
-    roles: [Config.Roles.PATIENT],
-    children: [
-      {
-        component: LazyHospitalsRegister,
-        path: "/hospitals/register/:id",
-        roles: [],
-      },
-    ],
-  },
-  {
-    component: LazyApplication,
-    path: "/applications",
-    roles: [Config.Roles.MANAGER, Config.Roles.ADMIN],
-    children: [
-      {
-        component: LazyApplicationView,
-        path: "/applications/view/:id",
-        roles: [],
-      },
-    ],
-  },
+    path: "/home",
+    roles: [],
+  }
 ];
 
 export default PATHS;

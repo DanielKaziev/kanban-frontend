@@ -5,15 +5,16 @@ import useHasRole from "../../../hooks/useHasRole";
 import { useGetRequestByPatientQuery } from "../../../services/hospitals";
 import { getFirstPagePath } from "../../../router";
 import useTokenData from "../../../hooks/useTokenData";
+import { Stack } from "@mui/material";
 
 const Authorized = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { isAuth } = useTokenData();
   const userRole = useHasRole("MANAGER");
-  const { data, isSuccess } = useGetRequestByPatientQuery("", {
-    skip: userRole,
-  });
+  // const { data, isSuccess } = useGetRequestByPatientQuery("", {
+  //   skip: userRole,
+  // });
   const path = getFirstPagePath();
 
   useEffect(() => {
@@ -26,6 +27,9 @@ const Authorized = () => {
   //   return <>Страница просмотра заявки</>
   // }
 
+  return <Stack>
+    <Outlet />
+  </Stack>
   return (
     <ResponsiveAppBar>
       <Outlet />

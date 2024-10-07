@@ -1,6 +1,6 @@
 {
-  "name": "hcp-front",
-  "version": "2.0.0",
+  "name": "kanban-frontend",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -20,6 +20,7 @@
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-http-backend": "^2.5.0",
     "jsrsasign": "^11.1.0",
+    "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",

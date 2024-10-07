@@ -35,24 +35,7 @@ const HospitalsRegister = () => {
 
   return (
     <Page>
-      <Stack spacing={5} direction="row">
-        <ContentStack spacing={3}>
-          <Stack>Название: {hospital?.nameRU}</Stack>
-          <Stack>Адрес: {hospital?.address}</Stack>
-          <Stack>Частная: {hospital?.isPrivate ? "Да" : "Нет"}</Stack>
-          {hospital && <Map latitude={hospital.lat} longitude={hospital.lon} />}
-        </ContentStack>
-        <ContentStack spacing={3}>
-          <Stack>Фамилия: {userData.lastName}</Stack>
-          <Stack>Имя: {userData.firstName}</Stack>
 
-          <Stack>Отчество: {userData.secondName}</Stack>
-          <Stack>ИИН: {userData.iin}</Stack>
-        </ContentStack>
-      </Stack>
-      <Button onClick={handlePost} variant="contained">
-        Отправить запрос на прикрепление
-      </Button>
     </Page>
   );
 };

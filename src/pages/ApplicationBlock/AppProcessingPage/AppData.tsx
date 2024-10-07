@@ -36,34 +36,6 @@ const AppData = () => {
   };
   return (
     <Stack spacing={2}>
-      <AppContainer>
-        <StrongTypography variant="h5">
-          {t("I18N_APPLICATION_NAME")}
-        </StrongTypography>
-        <Stack>
-          {t("I18N_FIRST_NAME")}: {appData.firstName}
-        </Stack>
-        <Stack>
-          {t("I18N_LAST_NAME")}: {appData.lastName}
-        </Stack>
-        <Stack>
-          {t("I18N_SECOND_NAME")}: {appData.secondName}
-        </Stack>
-        <Stack>
-          {t("I18N_IIN")}: {appData.iin}
-        </Stack>
-        <Stack>
-          {t("I18N_EMAIL")}: {appData.email}
-        </Stack>
-      </AppContainer>
-      <Stack direction="row" spacing={2} justifyContent="space-between">
-        <StyledButton variant="outlined" onClick={handleAccept}>
-          {t("I18N_ACCEPT")}
-        </StyledButton>
-        <StyledButton variant="outlined" onClick={handleReject}>
-          {t("I18N_REJECT")}
-        </StyledButton>
-      </Stack>
     </Stack>
   );
 };

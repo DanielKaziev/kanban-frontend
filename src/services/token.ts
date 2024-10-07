@@ -1,34 +1,26 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-
-import { ILoginData, IToken } from "../types/token";
+import { ILoginData, IRegisterData, IToken, ITokenData } from "../types/token";
 import baseAuthQuery from "./baseAuthQuery";
 
 export const tokenApi = createApi({
   reducerPath: "tokenApi",
   baseQuery: baseAuthQuery,
   endpoints: (builder) => ({
-    login: builder.mutation<IToken, ILoginData>({
+    login: builder.mutation<ITokenData, ILoginData>({
       query: (credentials: ILoginData) => {
-        const formData = {
-          iin: credentials.email,
-        };
         return {
-          url: "/auth/patient/login",
+          url: "/auth/login",
           method: "POST",
-          body: formData,
+          body: credentials,
         };
       },
     }),
-    loginStuff: builder.mutation<IToken, ILoginData>({
-      query: (credentials: ILoginData) => {
-        const formData = {
-          email: credentials.email,
-          password: credentials.password
-        };
+    register: builder.mutation<ITokenData, IRegisterData>({
+      query: (credentials: IRegisterData) => {
         return {
-          url: "/auth/stuff/login",
+          url: "/auth/registration",
           method: "POST",
-          body: formData,
+          body: credentials,
         };
       },
     }),
@@ -45,7 +37,7 @@ export const tokenApi = createApi({
         };
       },
     }),
-    refresh: builder.query<IToken, unknown>({
+    refresh: builder.query<ITokenData, unknown>({
       query: () => {
         const refreshToken = localStorage.getItem("refreshToken");
         const headers: { "Refresh-Token"?: string } = refreshToken
@@ -60,6 +52,6 @@ export const tokenApi = createApi({
   }),
 });
 
-export const { useLoginMutation, useLoginStuffMutation, useLogoutMutation, useRefreshQuery } =
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useRefreshQuery } =
   tokenApi;
 export default tokenApi;

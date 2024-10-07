@@ -2,7 +2,7 @@ import { FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
 import baseAppQuery from "./baseAppQuery";
 import baseAuthQuery from "./baseAuthQuery";
-import { IToken } from "../types/token";
+import { IToken, ITokenData } from "../types/token";
 import { clearTokenState, writeToken } from "../redux/slices/auth";
 
 const baseReauthQuery: BaseQueryFn<
@@ -20,7 +20,7 @@ const baseReauthQuery: BaseQueryFn<
     );
 
     if (refreshResult.data) {
-      const data = refreshResult.data as IToken;
+      const data = refreshResult.data as ITokenData;
       api.dispatch(writeToken(data));
 
       result = await baseAppQuery(args, api, extraOptions);

@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import TableCustom from "../../../components/Table";
 import { TTableData } from "../../../components/Table/types";
 import { useMemo } from "react";
@@ -7,29 +7,39 @@ import { useNavigate } from "react-router-dom";
 import Page from "../../../components/Page";
 import { useGetHospitalsListQuery } from "../../../services/hospitals";
 import prepareTableData from "./prepData";
+import PageLinks from "../../../components/PageLinks";
+import { useLogoutMutation } from "../../../services/token";
+import { clearTokenState } from "../../../redux/slices/auth";
+import { useDispatch } from "react-redux";
 
 const HospitalsList = () => {
+  const [logout] = useLogoutMutation();
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation("hospitals");
-  const { data, isSuccess } = useGetHospitalsListQuery() 
+  const dispatch = useDispatch();
+  const { t } = useTranslation("settings");
 
-  const handleNavigate = (id: string) => navigate(`/hospitals/register/${id}`)
-
-  const tableData = useMemo<TTableData>(() => {
-    const td = prepareTableData(data?.rows || [], handleNavigate)
-    
-    td.header.data.forEach((el) => {
-      el.value = t(el.value as string);
-    });
-    return td;
-  }, [isSuccess, i18n.language]);
-
-
-
-  return <Page>
-    <TableCustom data={tableData} />
-  </Page>;
-
+  const handleLogout = () => {
+    logout("");
+    dispatch(clearTokenState());
+    navigate("/");
+  };
+  return (
+    <Page>
+      <Stack
+        height={"100%"}
+        width={"100%"}
+        m={"auto"}
+        justifyContent="center"  // Центрирование по вертикали
+        alignItems="center"      // Центрирование по горизонтали
+      >
+        Comming Soon...
+        <PageLinks
+            onClick={handleLogout}
+            link={{ to: "/", label: t("I18N_LOGOUT") }}
+          />
+      </Stack>
+    </Page>
+  );
 };
 
 export default HospitalsList;

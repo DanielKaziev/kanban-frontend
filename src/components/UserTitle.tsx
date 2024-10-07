@@ -16,11 +16,7 @@ const UserTitle = () => {
   const userData = useTokenData();
   
   const getShortName = ()=>{
-    let fullName = `${userData.lastName} ${userData.firstName.charAt(0)}.`;
-    if (userData?.secondName) {
-      fullName += ` ${userData.secondName.charAt(0)}.`
-    }
-    return fullName
+    return "fullName"
   }
 
   const getLableIcom = ()=> {

@@ -7,18 +7,22 @@ import { clearTokenState } from "../../redux/slices/auth";
 import useAppSelector from "../../hooks/useAppSelector";
 import Unauthorized from "./Unauthorized";
 import Authorized from "./Authorized";
+import useAuthorized from "../../hooks/useAuthorized";
 
 const App = () => {
   const navigate = useNavigate();
   const isAuth = useAppSelector((state) => state.auth.isAuth);
 
+  const isAvl = useAuthorized()
+// console.log(isAvl);
+
   useEffect(() => {
-    if (!isAuth) {
+    if (!isAvl) {
       navigate("/");
     }
-  }, [isAuth]);
+  }, [isAvl]);
 
-  return isAuth ? <Authorized /> : <Unauthorized />;
+  return isAvl ? <Authorized /> : <Unauthorized />;
 };
 
 export default App;

@@ -8,6 +8,10 @@ export interface ILoginData {
   password: string;
 }
 
+export interface IRegisterData extends ILoginData {
+  username: string;
+}
+
 export interface IForgotPassword {
   password: string;
   confirm_password: string;
@@ -15,7 +19,6 @@ export interface IForgotPassword {
 
 export interface IToken {
   tokenData: ITokenData;
-  user: ITokenUserData;
 }
 
 export interface ITokenData {

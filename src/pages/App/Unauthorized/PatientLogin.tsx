@@ -22,22 +22,17 @@ const PatientLogin = ({}) => {
     handleSubmit,
     register,
     clearErrors,
-    watch,
     formState: { errors },
   } = useForm<ILoginData>({
     defaultValues: { email: "", password: "" },
   });
 
-  const email = watch("email");
-
   const [login, { isLoading, error, reset }] = useLoginMutation();
-
-  useEffect(() => {
-    reset();
-  }, [email]);
 
   const onSubmit: SubmitHandler<ILoginData> = (data) => {
     clearErrors();
+    // console.log(data);
+    
     login(data);
   };
 
@@ -48,26 +43,26 @@ const PatientLogin = ({}) => {
       alignItems="center"
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      spacing={3}
+      spacing={2}
     >
-
       <InputField
         autoFocus
         {...register("email", {
-          required: {
-            value: true,
-            message: t("I18N_LOGIN_FORM_USERNAME", {
-              field: t("I18N_LOGIN_FORM_USERNAME"),
-            }),
-          },
+          required: true,
         })}
-        label={t("I18N_IIN")}
+        label={t("I18N_EMAIL")}
         fullWidth
         required
-        error={!!errors.email}
-        helperText={errors.email?.message}
       />
-  
+      <InputField
+        {...register("password", {
+          required: true,
+        })}
+        label={t("I18N_PASSWORD")}
+        fullWidth
+        type="password"
+        required
+      />
       <LoadingButton
         type="submit"
         variant="contained"
@@ -77,11 +72,8 @@ const PatientLogin = ({}) => {
         size="large"
       >
         {t("I18N_LOGIN_FORM")}
-
       </LoadingButton>
-        <LanguageSwitcher />
-
-
+      <LanguageSwitcher />
     </Stack>
   );
 };
