@@ -1,0 +1,13 @@
+{
+  "I18N_LOGIN_FORM": "Login",
+  "I18N_PATIENT": "Patient",
+  "I18N_MANAGER": "Manager",
+  "I18N_LOGIN_FORM_USERNAME": "Enter a valid IIN",
+  "I18N_IIN": "IIN",
+  "I18N_PASSWORD": "Password",
+  "I18N_EMAIL": "Email",
+  "I18N_LOGIN_FORM_FIELD_EMAIL": "Enter a valid email",
+  "I18N_FIELD_PASSWORD": "Enter a valid password",
+  "I18N_PAGE_NOT_FOUND": " Sorry, the page was not found",
+  "I18N_RETURN_TO_MAIN_LINK": "Go back to the main page"
+}

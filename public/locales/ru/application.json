@@ -1,0 +1,10 @@
+{
+  "I18N_IIN": "ИИН",
+  "I18N_EMAIL": "Почта",
+  "I18N_FIRST_NAME": "Имя",
+  "I18N_LAST_NAME": "Фамилия",
+  "I18N_SECOND_NAME": "Отчество",
+  "I18N_APPLICATION_NAME": "Номер заявки",
+  "I18N_ACCEPT": "Принять",
+  "I18N_REJECT": "Отклонить"
+}

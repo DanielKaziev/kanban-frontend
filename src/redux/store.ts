@@ -1,21 +1,28 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { authApi } from "./services/auth";
+import { configureStore, isRejectedWithValue } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+
+import tokenApi from '../services/token';
+import { authReducer } from './slices/auth';
+import { hospitalsApi } from '../services/hospitals';
+import { applicationApi } from '../services/application';
 
 export const rootReducer = {
-    [authApi.reducerPath]: authApi.reducer,
-}
+  auth: authReducer,
+  [hospitalsApi.reducerPath]: hospitalsApi.reducer,
+  [applicationApi.reducerPath]: applicationApi.reducer,
+  [tokenApi.reducerPath]: tokenApi.reducer,
+};
 
-export const store = configureStore({
+const store = configureStore({
   reducer: rootReducer,
-  devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat(
-        authApi.middleware
+    getDefaultMiddleware().concat(
+      tokenApi.middleware,
+      hospitalsApi.middleware,
+      applicationApi.middleware,
     ),
 });
 
 setupListeners(store.dispatch);
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export default store

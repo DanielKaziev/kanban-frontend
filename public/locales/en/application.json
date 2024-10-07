@@ -1,0 +1,10 @@
+{
+  "I18N_IIN": "IIN",
+  "I18N_EMAIL": "Email",
+  "I18N_FIRST_NAME": "firstName",
+  "I18N_LAST_NAME": "lastName",
+  "I18N_SECOND_NAME": "secondName",
+  "I18N_APPLICATION_NAME": "Application number",
+  "I18N_ACCEPT": "Accept",
+  "I18N_REJECT": "Reject"
+}
