@@ -9,11 +9,11 @@ export const authApi = createApi({
     login: builder.mutation<IToken, TLoginData>({
       query: (credentials: TLoginData) => {
         return {
-            url: "",
-            method: "POST",
-            body: credentials
-        }
-      }
+          url: "",
+          method: "POST",
+          body: credentials,
+        };
+      },
     }),
   }),
 });

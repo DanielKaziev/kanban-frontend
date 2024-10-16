@@ -1,9 +1,9 @@
 export type TLoginData = {
-    email: string;
-    password: string;
-}
+  email: string;
+  password: string;
+};
 
 export type IToken = {
-    accessToken: string;
-    refreshToken: string;
-}
+  accessToken: string;
+  refreshToken: string;
+};
