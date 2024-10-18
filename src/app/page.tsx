@@ -1,14 +1,16 @@
 "use client";
-import { Paper } from "@mui/material";
+import { Button, Paper } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { useLogoutMutation } from "services/token";
 
 export default function Home({ children }: { children: React.ReactNode }) {
+  const { t } = useTranslation("common")
+  const [logout] = useLogoutMutation()
   return (
     <>
       <Paper>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
-        voluptatum aperiam officia, necessitatibus distinctio quisquam aliquam
-        rem pariatur et accusantium sunt quae minima autem animi nulla numquam
-        saepe ex accusamus.
+        {t("I18N_TITLE")}
+        <Button onClick={logout}>Push</Button>
       </Paper>
     </>
   );
