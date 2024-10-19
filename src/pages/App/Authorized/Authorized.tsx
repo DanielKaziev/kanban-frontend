@@ -1,8 +1,6 @@
 import { useEffect } from "react";
-import ResponsiveAppBar from "../../../components/Header";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import useHasRole from "../../../hooks/useHasRole";
-import { useGetRequestByPatientQuery } from "../../../services/hospitals";
 import { getFirstPagePath } from "../../../router";
 import useTokenData from "../../../hooks/useTokenData";
 import { Stack } from "@mui/material";
@@ -30,11 +28,6 @@ const Authorized = () => {
   return <Stack>
     <Outlet />
   </Stack>
-  return (
-    <ResponsiveAppBar>
-      <Outlet />
-    </ResponsiveAppBar>
-  );
 };
 
 export default Authorized;

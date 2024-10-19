@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import Tab from "@mui/material/Tab";
 import PatientLogin from "./PatientLogin";
 import StuffLogin from "./StuffLogin";
-import Logo from "../../../components/Logo";
 import { InputBox, LoginBox, LoginPaper, LogoStyle, TabsLogin } from "./style";
 import { Stack, Typography } from "@mui/material";
 
