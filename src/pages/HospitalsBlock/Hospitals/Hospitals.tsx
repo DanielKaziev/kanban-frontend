@@ -1,16 +1,11 @@
-import { Button, Stack } from "@mui/material";
-import TableCustom from "../../../components/Table";
-import { TTableData } from "../../../components/Table/types";
-import { useMemo } from "react";
+import { Stack } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import Page from "../../../components/Page";
-import { useGetHospitalsListQuery } from "../../../services/hospitals";
-import prepareTableData from "./prepData";
-import PageLinks from "../../../components/PageLinks";
 import { useLogoutMutation } from "../../../services/token";
 import { clearTokenState } from "../../../redux/slices/auth";
 import { useDispatch } from "react-redux";
+import PageLinks from "../../../components/PageLinks";
 
 const HospitalsList = () => {
   const [logout] = useLogoutMutation();
@@ -29,8 +24,8 @@ const HospitalsList = () => {
         height={"100%"}
         width={"100%"}
         m={"auto"}
-        justifyContent="center"  // Центрирование по вертикали
-        alignItems="center"      // Центрирование по горизонтали
+        justifyContent="center"
+        alignItems="center"
       >
         Comming Soon...
         <PageLinks

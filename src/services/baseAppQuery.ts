@@ -2,7 +2,11 @@ import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import i18n from "i18next";
 import { injectToken } from "./injectHeaders";
 
-export const BASE_APP_URL = `${process.env.REACT_APP_API_URL}/api/`;
+export let BASE_APP_URL = `${process.env.REACT_APP_API_URL}/api/`;
+
+if (process.env.NODE_ENV === 'production') {
+  BASE_APP_URL = `${process.env.REACT_APP_BACKEND_URL}/api/`;
+}
 
 const baseAppQuery = fetchBaseQuery({
   credentials: "include",
