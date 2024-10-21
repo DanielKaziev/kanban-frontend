@@ -7,7 +7,7 @@ import { clearTokenState } from "../../../redux/slices/auth";
 import { useDispatch } from "react-redux";
 import PageLinks from "../../../components/PageLinks";
 
-const HospitalsList = () => {
+const BoardsList = () => {
   const [logout] = useLogoutMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -37,4 +37,4 @@ const HospitalsList = () => {
   );
 };
 
-export default HospitalsList;
+export default BoardsList;

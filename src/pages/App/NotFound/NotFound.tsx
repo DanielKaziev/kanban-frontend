@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useTranslation } from "react-i18next";
-import NotFoundIcon from "./NotFoundIcon";
 import { Box } from "@mui/material";
 import { styled } from "@mui/material";
 
@@ -44,8 +43,6 @@ const NotFound = () => {
             {t("I18N_RETURN_TO_MAIN_LINK")}
           </Button>
         </Box>
-
-        <NotFoundIcon />
       </StyledBox>
     </Stack>
   );

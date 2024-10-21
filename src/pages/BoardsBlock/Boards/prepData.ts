@@ -1,7 +1,6 @@
 import { TTableData } from './../../../components/Table/types';
-import { IHospital } from './../../../types/hospitals';
 
-const prepareTableData = (data: Array<IHospital>, handleClick: (id: string)=> void)=>{
+const prepareTableData = (data: Array<any>, handleClick: (id: string)=> void)=>{
     const rd: TTableData ={
         header: {
           data: [

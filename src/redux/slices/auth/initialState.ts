@@ -1,5 +1,4 @@
-import Config from "../../../config/Config";
-import { IAuthInitState } from "./types";
+import { IAuthInitState } from "../../../types/token";
 
 export const DEFAULT: IAuthInitState = {
   id: "",

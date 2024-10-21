@@ -1,4 +1,4 @@
-import { IAuthInitState } from "redux/slices/auth/types";
+import { IAuthInitState } from "types/token";
 import useAppSelector from "./useAppSelector";
 
 const useTokenData = ():IAuthInitState =>

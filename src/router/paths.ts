@@ -1,4 +1,4 @@
-import LazyHospitals from "../pages/HospitalsBlock/Hospitals";
+import LazyBoards from "../pages/BoardsBlock/Boards";
 import { TRoles } from "../types/person";
 
 export type TPathEntry = {
@@ -12,7 +12,7 @@ export type TPathEntry = {
 
 const PATHS: Array<TPathEntry> = [
   {
-    component: LazyHospitals,
+    component: LazyBoards,
     path: "/home",
     roles: [],
   }

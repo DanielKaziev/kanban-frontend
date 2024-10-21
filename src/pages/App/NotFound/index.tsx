@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 
-const NotFound = React.lazy(() => import("./NotFoundWrapper"));
+const NotFound = React.lazy(() => import("./NotFound"));
 
 const LazyNotFound = () => (
   <Suspense fallback={<div />}>

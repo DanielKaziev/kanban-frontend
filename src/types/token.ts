@@ -39,3 +39,11 @@ export interface ITokenUserData {
 export interface IUserAuth extends ITokenUserData {
   isAuth: boolean;
 }
+
+export interface IAuthInitState {
+  id: string;
+  email: string;
+  username: string;
+  isAuth: boolean;
+  roleName: string;
+}

@@ -1,15 +1,14 @@
 import App from "../pages/App";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { prepareAllRouteObjects } from "../router";
-
-import NotFoundWrapper from "../pages/App/NotFound/NotFoundWrapper";
+import LazyNotFound from "../pages/App/NotFound";
 
 const RouteProviderWrapper = () => {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <App />,
-      errorElement: <NotFoundWrapper />,
+      errorElement: <LazyNotFound />,
       children: prepareAllRouteObjects(),
     },
   ]);

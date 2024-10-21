@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import initialState, { DEFAULT } from "./initialState";
-import { ITokenData } from "../../../types/token";
+import { IAuthInitState, ITokenData } from "../../../types/token";
 import tokenApi from "../../../services/token";
-import { IAuthInitState } from "./types";
 import { jwtDecode } from "jwt-decode";
 
 const clearTokenStateReducer = (state: IAuthInitState) => {
