@@ -1,39 +1,31 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { styled } from "@mui/material/styles";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import { useLoginMutation } from "../../../services/token";
-import { ILoginData } from "../../../types/token";
-import LanguageSwitcher from "./../../../components/Language";
+import { ILoginData, IRegisterData } from "../../../types/token";
+import LanguageSwitcher from "../../../components/Language";
 
-const InputField = styled(TextField)(({ theme }) => ({
-  "& .MuiInputBase-root": {
-    border: "none",
-    boxShadow: "none",
-  },
-}));
+import { InputField } from "./style";
+import { useRegisterMutation } from "../../../services/token";
 
-const PatientLogin = ({}) => {
+const Registration = () => {
   const { t } = useTranslation("login");
   const {
     handleSubmit,
     register,
     clearErrors,
+    watch,
     formState: { errors },
-  } = useForm<ILoginData>({
+  } = useForm<IRegisterData>({
     defaultValues: { email: "", password: "" },
   });
 
-  const [login, { isLoading, error, reset }] = useLoginMutation();
+  const [registration, { isLoading, error, reset }] = useRegisterMutation();
 
-  const onSubmit: SubmitHandler<ILoginData> = (data) => {
+  const onSubmit: SubmitHandler<IRegisterData> = (data) => {
     clearErrors();
-    // console.log(data);
-    
-    login(data);
+    registration(data);
   };
 
   return (
@@ -47,6 +39,14 @@ const PatientLogin = ({}) => {
     >
       <InputField
         autoFocus
+        {...register("username", {
+          required: true,
+        })}
+        label={t("I18N_USERNAME")}
+        fullWidth
+        required
+      />
+      <InputField
         {...register("email", {
           required: true,
         })}
@@ -71,11 +71,11 @@ const PatientLogin = ({}) => {
         disableElevation
         size="large"
       >
-        {t("I18N_LOGIN_FORM")}
+        {t("I18N_REG_FORM")}
       </LoadingButton>
       <LanguageSwitcher />
     </Stack>
   );
 };
 
-export default PatientLogin;
+export default Registration;

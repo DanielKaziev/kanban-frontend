@@ -1,5 +1,4 @@
 import { BaseQueryApi } from "@reduxjs/toolkit/query";
-import i18n from "i18next";
 
 export function injectToken(
   headers: Headers,

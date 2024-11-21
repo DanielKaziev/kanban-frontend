@@ -1,31 +1,37 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { styled } from "@mui/material/styles";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Stack from "@mui/material/Stack";
-import { ILoginData, IRegisterData } from "../../../types/token";
-import LanguageSwitcher from "./../../../components/Language";
+import TextField from "@mui/material/TextField";
+import { useLoginMutation } from "../../../services/token";
+import { ILoginData } from "../../../types/token";
+import LanguageSwitcher from "../../../components/Language";
 
-import { InputField } from "./style";
-import { useRegisterMutation } from "../../../services/token";
+const InputField = styled(TextField)(({ theme }) => ({
+  "& .MuiInputBase-root": {
+    border: "none",
+    boxShadow: "none",
+  },
+}));
 
-const StuffLogin = () => {
+const Login = ({}) => {
   const { t } = useTranslation("login");
   const {
     handleSubmit,
     register,
     clearErrors,
-    watch,
     formState: { errors },
-  } = useForm<IRegisterData>({
+  } = useForm<ILoginData>({
     defaultValues: { email: "", password: "" },
   });
 
-  const [registration, { isLoading, error, reset }] = useRegisterMutation();
+  const [login, { isLoading, error, reset }] = useLoginMutation();
 
-  const onSubmit: SubmitHandler<IRegisterData> = (data) => {
-    clearErrors();
-    registration(data);
+  const onSubmit: SubmitHandler<ILoginData> = (data) => {
+    clearErrors();    
+    login(data);
   };
 
   return (
@@ -39,14 +45,6 @@ const StuffLogin = () => {
     >
       <InputField
         autoFocus
-        {...register("username", {
-          required: true,
-        })}
-        label={t("I18N_USERNAME")}
-        fullWidth
-        required
-      />
-      <InputField
         {...register("email", {
           required: true,
         })}
@@ -71,11 +69,11 @@ const StuffLogin = () => {
         disableElevation
         size="large"
       >
-        {t("I18N_REG_FORM")}
+        {t("I18N_LOGIN_FORM")}
       </LoadingButton>
       <LanguageSwitcher />
     </Stack>
   );
 };
 
-export default StuffLogin;
+export default Login;

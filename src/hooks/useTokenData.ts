@@ -1,7 +1,7 @@
-import { IAuthInitState } from "types/token";
+import { IAuthInitState, IUserData } from "types/token";
 import useAppSelector from "./useAppSelector";
 
-const useTokenData = ():IAuthInitState =>
+const useTokenData = ():IUserData =>
   useAppSelector((state) => state.auth);
 
 export default useTokenData;

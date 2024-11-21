@@ -9,6 +9,10 @@ const Authorized = () => {
   const navigate = useNavigate();
   const { isAuth } = useTokenData();
   const path = getFirstPagePath();
+  const tkdata = useTokenData();
+
+  console.log(tkdata);
+  
 
   useEffect(() => {
     if (pathname === "/") {

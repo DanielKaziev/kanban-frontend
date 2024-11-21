@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import initialState, { DEFAULT } from "./initialState";
-import { IAuthInitState, ITokenData } from "../../../types/token";
+import { ITokenData, IUserData } from "../../../types/token";
 import tokenApi from "../../../services/token";
 import { jwtDecode } from "jwt-decode";
 
-const clearTokenStateReducer = (state: IAuthInitState) => {
+const clearTokenStateReducer = (state: IUserData) => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("user");
@@ -16,33 +16,19 @@ const clearTokenStateReducer = (state: IAuthInitState) => {
 };
 
 const writeTokenReducer = (
-  state: IAuthInitState,
+  state: IUserData,
   { payload }: { payload: ITokenData }
 ) => {
   localStorage.setItem("accessToken", payload.accessToken);
   localStorage.setItem("refreshToken", payload.refreshToken);
   const token = payload.accessToken
-  const {id, email, username } = jwtDecode(token) as IAuthInitState
-  state.id = id
-  state.email = email
-  state.username = username
-  state.isAuth = true;
-  state.roleName = "User"
+  const userData = jwtDecode(token) as IUserData;
   
-
-  // if (!payload.user.roleName) {
-  //   payload.user.roleName = Config.Roles.PATIENT
-  // }
-  // localStorage.setItem("user", JSON.stringify(payload.user))
+  Object.keys(DEFAULT).forEach((key) => {
+    state[key] = userData[key];
+  });
   
-  // Object.keys(payload.user).forEach((key) => {
-  //   state[key] = payload.user[key];
-  // });
-
-  // if (!state.roleName) {
-  //   state.roleName = Config.Roles.PATIENT
-  // }
-
+  state.isAuth = true
 
 };
 

@@ -1,19 +1,25 @@
-import { IAuthInitState } from "../../../types/token";
+import { jwtDecode } from "jwt-decode";
+import { IAuthInitState, IUserData } from "../../../types/token";
 
-export const DEFAULT: IAuthInitState = {
+export const DEFAULT: IUserData = {
   id: "",
-  email: "",
   username: "",
-  roleName: "",
+  email: "",
+  state: "",
+  role: "",
+  permissions: [],
   isAuth: false,
+  iat: 0,
+  exp: 0,
 };
 
-const getInitialState = (): IAuthInitState => {
+const getInitialState = (): IUserData => {
   const accessToken = localStorage.getItem("accessToken");
-  const user = localStorage.getItem("user")
 
-  if (accessToken && accessToken !== "undefined" && user) {
-    return {...JSON.parse(user), isAuth: true};
+  if (accessToken && accessToken !== "undefined") {
+    const userData = jwtDecode(accessToken) as IUserData;
+
+    return {...userData, isAuth: true}
   }
 
 
