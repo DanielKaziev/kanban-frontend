@@ -9,7 +9,7 @@ export interface IPageProps {
 const PageContainer = styled(Stack)(({ theme }) => ({
   margin: theme.spacing(3),
   flexGrow: 1,
-  alignItems: "center",
+  overflow: "auto",
 }));
 
 const Page = ({ children }: PropsWithChildren<IPageProps>) => (

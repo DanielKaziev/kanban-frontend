@@ -14,9 +14,10 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const HeaderBox = styled(Stack)(({ theme }) => ({
   backgroundColor: "white",
+  position: "sticky",
   padding: `${theme.spacing(3)} ${theme.spacing(10)}`,
   width: "100%",
-  minHeight: "72px",
+  minHeight: "88px",
 }));
 
 const LogoBox = styled(Stack)(({ theme }) => ({
@@ -45,8 +46,6 @@ const Header = () => {
   const goHome = () => {
     navigate("/home");
   };
-
-  console.log(userData);
 
   return (
     <HeaderBox spacing={1} direction={"row"}>
