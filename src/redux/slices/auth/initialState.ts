@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-import { IAuthInitState, IUserData } from "../../../types/token";
+import { IUserData } from "../../../types/token";
 
 export const DEFAULT: IUserData = {
   id: "",
@@ -18,12 +18,10 @@ const getInitialState = (): IUserData => {
 
   if (accessToken && accessToken !== "undefined") {
     const userData = jwtDecode(accessToken) as IUserData;
-
-    return {...userData, isAuth: true}
+    return { ...userData, isAuth: true };
   }
 
-
-  return {...DEFAULT, isAuth: false};
+  return { ...DEFAULT, isAuth: false };
 };
 
 export default getInitialState();

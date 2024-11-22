@@ -6,35 +6,28 @@ import { useLogoutMutation } from "../../../services/token";
 import { clearTokenState } from "../../../redux/slices/auth";
 import { useDispatch } from "react-redux";
 import PageLinks from "../../../components/PageLinks";
+import { useGetOwnBoardsListQuery } from "../../../services/boards";
+import BoardItem from "../../../components/Board/BoardItem";
+
+const testdata = {
+  id: "5380c258-47cb-47cd-96c7-300af2355e82",
+  name: "Board",
+  description: "Description for New Board",
+  userRole: "host",
+  isPrivate: true,
+  createdAt: "2024-11-18T19:48:23.188Z",
+  updatedAt: "2024-11-18T19:48:23.188Z",
+};
 
 const BoardsList = () => {
-  const [logout] = useLogoutMutation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   const { t } = useTranslation("settings");
 
-  const handleLogout = () => {
-    logout("");
-    dispatch(clearTokenState());
-    navigate("/");
-  };
-  return (
-    <Page>
-      <Stack
-        height={"100%"}
-        width={"100%"}
-        m={"auto"}
-        justifyContent="center"
-        alignItems="center"
-      >
-        Comming Soon...
-        <PageLinks
-            onClick={handleLogout}
-            link={{ to: "/", label: t("I18N_LOGOUT") }}
-          />
-      </Stack>
-    </Page>
-  );
+  const { data } = useGetOwnBoardsListQuery("");
+  console.log(data);
+
+  return <Page></Page>;
 };
 
 export default BoardsList;

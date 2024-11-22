@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 const Boards = React.lazy(() => import("./Boards"));
 
 const LazyBoards = () => (
-  <Suspense fallback={<></>}>
+  <Suspense fallback={<div></div>}>
     <Boards />
   </Suspense>
 );
