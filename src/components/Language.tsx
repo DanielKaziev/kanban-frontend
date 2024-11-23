@@ -10,6 +10,7 @@ import Stack from "@mui/material/Stack";
 import i18n from "../i18n";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { IconButton } from "@mui/material";
 
 const languages: Array<string> = ["I18N_RUSSIAN", "I18N_ENGLISH"];
 
@@ -60,23 +61,14 @@ const LanguageSwitcher = () => {
 
   return (
     <Stack direction="row" spacing={2}>
-      <Button
-        ref={anchorRef}
-        id="composition-button"
-        aria-controls={open ? "composition-menu" : undefined}
-        aria-expanded={open ? "true" : undefined}
-        aria-haspopup="true"
-        onClick={handleToggle}
-      >
-        <LanguageIcon />
-      </Button>
+      <IconButton ref={anchorRef} aria-label="exit" onClick={handleToggle}>
+        <LanguageIcon color="info" />
+      </IconButton>
       <Popper
         open={open}
         anchorEl={anchorRef.current}
-        role={undefined}
-        placement="bottom-start"
+        placement="bottom"
         transition
-        disablePortal
       >
         {({ TransitionProps, placement }) => (
           <Grow

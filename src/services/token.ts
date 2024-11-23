@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { ILoginData, IRegisterData, IToken, ITokenData } from "../types/token";
+import { ILoginData, IRegisterData, ITokenData } from "../types/token";
 import baseAuthQuery from "./baseAuthQuery";
 
 export const tokenApi = createApi({

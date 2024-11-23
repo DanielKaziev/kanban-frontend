@@ -36,11 +36,11 @@ export const prepareAllRouteObjects = () => {
       rolesInclude = true
     } else {
       rolesInclude = pathEntry.roles.some(
-        (role)=>data?.roleName == role
+        (role)=>data?.role == role
       )
     }
     if (rolesInclude) {
-      routeObjects.push(...prepareRouteObjects(pathEntry, data?.roleName));
+      routeObjects.push(...prepareRouteObjects(pathEntry, data?.role));
     }
   });
   return routeObjects;

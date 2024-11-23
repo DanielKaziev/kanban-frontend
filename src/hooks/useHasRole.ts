@@ -5,7 +5,7 @@ import useTokenData from "./useTokenData";
 const useHasRole = (role?: TRoles): boolean => {
   const roleName = useTokenData();
 
-  if (roleName.roleName === role) {
+  if (roleName.role === role) {
     return true;
   }
   if (!role) {

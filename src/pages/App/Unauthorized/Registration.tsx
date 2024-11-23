@@ -4,12 +4,14 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Stack from "@mui/material/Stack";
 import { ILoginData, IRegisterData } from "../../../types/token";
-import LanguageSwitcher from "./../../../components/Language";
+import LanguageSwitcher from "../../../components/Language";
 
 import { InputField } from "./style";
 import { useRegisterMutation } from "../../../services/token";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import ErrorMessage from "../../../components/ErrorMessage";
 
-const StuffLogin = () => {
+const Registration = () => {
   const { t } = useTranslation("login");
   const {
     handleSubmit,
@@ -73,9 +75,10 @@ const StuffLogin = () => {
       >
         {t("I18N_REG_FORM")}
       </LoadingButton>
+      {error && <ErrorMessage error={error as FetchBaseQueryError | null} />}
       <LanguageSwitcher />
     </Stack>
   );
 };
 
-export default StuffLogin;
+export default Registration;

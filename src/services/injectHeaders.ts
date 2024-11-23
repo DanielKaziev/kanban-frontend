@@ -1,5 +1,4 @@
 import { BaseQueryApi } from "@reduxjs/toolkit/query";
-import i18n from "i18next";
 
 export function injectToken(
   headers: Headers,
@@ -10,8 +9,8 @@ export function injectToken(
   if (accessToken) {
     headers.set("Authorization", `Bearer ${accessToken}`);
   }
-  if (refreshToken) {
-    headers.set("Refresh-Token", refreshToken);
-  }
+  // if (refreshToken) {
+  //   headers.set("Refresh-Token", refreshToken);
+  // }
   return headers;
 }

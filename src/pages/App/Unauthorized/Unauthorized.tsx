@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Tab from "@mui/material/Tab";
-import PatientLogin from "./PatientLogin";
-import StuffLogin from "./StuffLogin";
+import Login from "./Login";
+import Registration from "./Registration";
 import { InputBox, LoginBox, LoginPaper, LogoStyle, TabsLogin } from "./style";
 import { Stack, Typography } from "@mui/material";
 
@@ -34,8 +34,8 @@ const Unauthorized = () => {
         </TabsLogin>
         </Stack>
         <InputBox>
-          {value === 0 && <PatientLogin />}
-          {value === 1 && <StuffLogin />}
+          {value === 0 && <Login />}
+          {value === 1 && <Registration />}
         </InputBox>
       </LoginPaper>
     </LoginBox>

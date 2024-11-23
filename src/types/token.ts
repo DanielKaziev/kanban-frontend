@@ -47,3 +47,15 @@ export interface IAuthInitState {
   isAuth: boolean;
   roleName: string;
 }
+
+export interface IUserData {
+  id: string;
+  username: string;
+  email: string;
+  state: string;
+  role: string;
+  permissions: string[];
+  isAuth: boolean;
+  iat: number;
+  exp: number;
+}
