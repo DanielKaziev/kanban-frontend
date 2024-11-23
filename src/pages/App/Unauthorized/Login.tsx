@@ -8,6 +8,8 @@ import TextField from "@mui/material/TextField";
 import { useLoginMutation } from "../../../services/token";
 import { ILoginData } from "../../../types/token";
 import LanguageSwitcher from "../../../components/Language";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 const InputField = styled(TextField)(({ theme }) => ({
   "& .MuiInputBase-root": {
@@ -30,7 +32,7 @@ const Login = ({}) => {
   const [login, { isLoading, error, reset }] = useLoginMutation();
 
   const onSubmit: SubmitHandler<ILoginData> = (data) => {
-    clearErrors();    
+    clearErrors();
     login(data);
   };
 
@@ -71,6 +73,7 @@ const Login = ({}) => {
       >
         {t("I18N_LOGIN_FORM")}
       </LoadingButton>
+      {error && <ErrorMessage error={error as FetchBaseQueryError | null} />}
       <LanguageSwitcher />
     </Stack>
   );

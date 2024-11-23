@@ -8,6 +8,8 @@ import LanguageSwitcher from "../../../components/Language";
 
 import { InputField } from "./style";
 import { useRegisterMutation } from "../../../services/token";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import ErrorMessage from "../../../components/ErrorMessage";
 
 const Registration = () => {
   const { t } = useTranslation("login");
@@ -73,6 +75,7 @@ const Registration = () => {
       >
         {t("I18N_REG_FORM")}
       </LoadingButton>
+      {error && <ErrorMessage error={error as FetchBaseQueryError | null} />}
       <LanguageSwitcher />
     </Stack>
   );

@@ -7,3 +7,9 @@ export interface IBoard {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ICreateBoard {
+  name: string;
+  description: string;
+  isPrivate: boolean;
+}

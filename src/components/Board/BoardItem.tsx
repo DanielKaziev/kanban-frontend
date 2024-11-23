@@ -3,25 +3,39 @@ import { IBoard } from "../../types/boards";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { useNavigate } from "react-router-dom"; // Импортируем хук для навигации
 
 interface BoardItemProps {
   data: IBoard;
 }
 
 const BoardItem: FC<BoardItemProps> = ({ data }) => {
+  const navigate = useNavigate();
+
   const privateColor = data.isPrivate ? "#ffab91" : "#81c784";
+
+  const handleClick = () => {
+    navigate(`/boards/${data.id}`);
+  };
 
   return (
     <Paper
       elevation={3}
-      style={{
+      sx={{
         padding: "16px",
         margin: "8px",
         borderRadius: "8px",
         position: "relative",
         backgroundColor: "#f9f9f9",
         overflow: "hidden",
+        cursor: "pointer",
+        transition: "all 0.2s ease-in-out",
+        "&:hover": {
+          transform: "translateY(-5px)",
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+        },
       }}
+      onClick={handleClick}
     >
       <Box
         style={{

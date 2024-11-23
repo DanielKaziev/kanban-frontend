@@ -8,16 +8,31 @@ import {
   useTheme,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Page from "../../../components/Page";
 import { useGetOwnBoardsListQuery } from "../../../services/boards";
 import BoardItem from "../../../components/Board/BoardItem";
 import NoContent from "../../../components/NoContent";
+import CreateBoardModal from "../../../components/Board/CreateBoardModal";
 
 const BoardsList = () => {
   const navigate = useNavigate();
-
   const theme = useTheme();
-  const { data, isLoading } = useGetOwnBoardsListQuery("");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
+
+  const { data, isLoading, refetch } = useGetOwnBoardsListQuery("");
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredBoards = data?.filter((board) =>
+    board.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <Page>
@@ -30,30 +45,20 @@ const BoardsList = () => {
           >
             <TextField
               sx={{ flexGrow: 1 }}
-              label="Поиск..."
+              label="Поиск доски..."
               size="small"
               variant="outlined"
+              value={searchQuery}
+              onChange={handleSearchChange}
             />
             <Button
-              variant="contained"
-              size="small"
-              sx={{
-                whiteSpace: "nowrap",
-                textTransform: "none",
-                backgroundColor: "primary.main",
-              }}
-            >
-              Найти
-            </Button>
-            <Stack flexGrow={2} />
-            <Button
               variant="outlined"
-              size="small"
               sx={{
                 whiteSpace: "nowrap",
                 textTransform: "none",
                 borderColor: "primary.main",
               }}
+              onClick={handleOpenModal}
             >
               Создать доску
             </Button>
@@ -61,17 +66,24 @@ const BoardsList = () => {
         </Paper>
       </Box>
       {!data && !isLoading && <NoContent />}
-      {data && (
+      {data && filteredBoards && filteredBoards.length > 0 ? (
         <Box px={theme.spacing(5)}>
-          <Grid container>
-            {data.map((row, index) => (
+          <Grid container spacing={2}>
+            {filteredBoards.map((board, index) => (
               <Grid key={index} item xs={12} sm={6} xl={3}>
-                <BoardItem data={row} />
+                <BoardItem data={board} />
               </Grid>
             ))}
           </Grid>
         </Box>
+      ) : (
+        <NoContent />
       )}
+      <CreateBoardModal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        onCreate={refetch}
+      />
     </Page>
   );
 };
