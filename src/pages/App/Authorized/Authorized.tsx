@@ -4,7 +4,6 @@ import { getFirstPagePath } from "../../../router";
 import useTokenData from "../../../hooks/useTokenData";
 import { Stack } from "@mui/material";
 import Header from "../../../components/Header";
-import Page from "../../../components/Page";
 
 const Authorized = () => {
   const { pathname } = useLocation();

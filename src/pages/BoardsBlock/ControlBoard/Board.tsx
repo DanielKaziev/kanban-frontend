@@ -1,45 +1,55 @@
-import {
-  Box,
-  Button,
-  Grid,
-  Paper,
-  Stack,
-  TextField,
-  useTheme,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Box, Paper, Stack, styled, TextField, useTheme } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import Page from "../../../components/Page";
-import { useGetOwnBoardsListQuery } from "../../../services/boards";
-import BoardItem from "../../../components/Board/BoardItem";
+import { useGetBoardEventsByidListQuery } from "../../../services/boards";
+import EventBlock from "../../../components/Board/EventBlock";
 import NoContent from "../../../components/NoContent";
-import CreateBoardModal from "../../../components/Board/CreateBoardModal";
+
+// Стили для горизонтального скролла
+const HorizontalScroll = styled(Stack)(({ theme }) => ({
+  flexDirection: "row",
+  overflowX: "auto",
+  flexGrow: 1,
+  overflowY: "hidden",
+  padding: theme.spacing(1),
+  "&::-webkit-scrollbar": {
+    height: 8,
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: theme.palette.grey[400],
+    borderRadius: 4,
+  },
+}));
 
 const BoardsList = () => {
   const navigate = useNavigate();
+  const { boardId } = useParams();
   const theme = useTheme();
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const [isModalOpen, setModalOpen] = useState(false);
-  const handleOpenModal = () => setModalOpen(true);
-  const handleCloseModal = () => setModalOpen(false);
-
-  const { data, isLoading, refetch } = useGetOwnBoardsListQuery("");
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const filteredBoards = data?.filter((board) =>
-    board.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const { data } = useGetBoardEventsByidListQuery(boardId ?? "");
 
   return (
-    <Page>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel maxime enim
-      sunt animi illo laboriosam officiis asperiores cupiditate unde,
-      perferendis mollitia in numquam expedita possimus nobis aperiam repellat
-      qui aliquam.
+    <Page noSpacing>
+      <Box px={theme.spacing(1)}>
+        <Paper elevation={2} sx={{ borderRadius: "8px", mb: 2 }}>
+          <Stack
+            spacing={2}
+            direction="row"
+            sx={{ p: "16px", alignItems: "center" }}
+          >
+            <TextField
+              sx={{ flexGrow: 1 }}
+              label="Поиск доски..."
+              size="small"
+              variant="outlined"
+            />
+          </Stack>
+        </Paper>
+      </Box>
+      <HorizontalScroll>
+        {data && data?.length < 1 && <NoContent />}
+        {data &&
+          data.map((event) => <EventBlock key={event.id} event={event} />)}
+      </HorizontalScroll>
     </Page>
   );
 };

@@ -8,7 +8,7 @@ const StyledLink = styled(RouterLink)(({ theme }) => ({
   color: theme.palette.primary.main,
   "&:hover": {
     color: theme.palette.secondary.main,
-  }
+  },
 }));
 
 interface IPageLink {

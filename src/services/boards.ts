@@ -1,8 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { IBoard, ICreateBoard } from "../types/boards";
 import baseReauthQuery from "./baseReauthQuery";
+import { IEvent } from "types/events";
 
-const ENDPOINT = "/boards";
+const ENDPOINT = "";
 
 export const boardsApi = createApi({
   reducerPath: "boardsApi",
@@ -10,6 +11,9 @@ export const boardsApi = createApi({
   endpoints: (builder) => ({
     getOwnBoardsList: builder.query<Array<IBoard>, any>({
       query: () => `${ENDPOINT}/own`,
+    }),
+    getBoardEventsByidList: builder.query<Array<IEvent>, string>({
+      query: (boardId: string) => `${ENDPOINT}/${boardId}/events`,
     }),
     createBoard: builder.mutation<IBoard, ICreateBoard>({
       query: (board: ICreateBoard) => ({
@@ -21,6 +25,10 @@ export const boardsApi = createApi({
   }),
 });
 
-export const { useGetOwnBoardsListQuery, useCreateBoardMutation } = boardsApi;
+export const {
+  useGetOwnBoardsListQuery,
+  useCreateBoardMutation,
+  useGetBoardEventsByidListQuery,
+} = boardsApi;
 
 export default boardsApi;

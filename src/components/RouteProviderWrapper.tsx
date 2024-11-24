@@ -13,7 +13,7 @@ const RouteProviderWrapper = () => {
       children: prepareAllRouteObjects(),
     },
     {
-      path: "/boards/:id",
+      path: "/boards/:boardId",
       element: <LazyControleBoard />,
       errorElement: <LazyNotFound />,
     },

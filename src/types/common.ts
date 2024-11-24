@@ -1,4 +1,4 @@
 export interface IPaginatedList<T> {
-    count: number;
-    rows: Array<T>;
+  count: number;
+  rows: Array<T>;
 }

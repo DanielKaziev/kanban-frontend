@@ -19,19 +19,21 @@ const Unauthorized = () => {
       <LoginPaper>
         <LogoStyle>
           {/* <Logo width="100px" height="75px" /> */}
-          <Typography sx={{p: "15px", fontSize: "2rem"}}>Kanban Board</Typography>
+          <Typography sx={{ p: "15px", fontSize: "2rem" }}>
+            Kanban Board
+          </Typography>
         </LogoStyle>
-        <Stack width={"100%"} >
-        <TabsLogin
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          centered
-        >
-          <Tab sx={{ flexGrow: 1 }} label={t("I18N_LOGIN")} />
-          <Tab sx={{ flexGrow: 1 }} label={t("I18N_REGISTER")} />
-        </TabsLogin>
+        <Stack width={"100%"}>
+          <TabsLogin
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab sx={{ flexGrow: 1 }} label={t("I18N_LOGIN")} />
+            <Tab sx={{ flexGrow: 1 }} label={t("I18N_REGISTER")} />
+          </TabsLogin>
         </Stack>
         <InputBox>
           {value === 0 && <Login />}

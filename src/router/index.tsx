@@ -6,7 +6,10 @@ type RouteEntriesObject = RouteObject & {
   roles?: string[];
 };
 
-export const prepareRouteObjects = (pathEntry: TPathEntry, roles: string | undefined): RouteObject[] => {
+export const prepareRouteObjects = (
+  pathEntry: TPathEntry,
+  roles: string | undefined
+): RouteObject[] => {
   const Component = pathEntry.component;
   const entries: RouteEntriesObject[] = [
     {
@@ -16,8 +19,8 @@ export const prepareRouteObjects = (pathEntry: TPathEntry, roles: string | undef
     },
   ];
   pathEntry.children?.forEach((childEntry) => {
-    const rolesInclude = childEntry.roles.every(
-      (role) => roles?.includes(role)
+    const rolesInclude = childEntry.roles.every((role) =>
+      roles?.includes(role)
     );
     if (rolesInclude) {
       entries.push(...prepareRouteObjects(childEntry, roles));
@@ -28,16 +31,14 @@ export const prepareRouteObjects = (pathEntry: TPathEntry, roles: string | undef
 
 export const prepareAllRouteObjects = () => {
   const routeObjects: Array<RouteEntriesObject> = [];
-  const data = useTokenData()
+  const data = useTokenData();
 
   PATHS.forEach((pathEntry) => {
-    let rolesInclude = false
+    let rolesInclude = false;
     if (pathEntry.roles.length === 0) {
-      rolesInclude = true
+      rolesInclude = true;
     } else {
-      rolesInclude = pathEntry.roles.some(
-        (role)=>data?.role == role
-      )
+      rolesInclude = pathEntry.roles.some((role) => data?.role == role);
     }
     if (rolesInclude) {
       routeObjects.push(...prepareRouteObjects(pathEntry, data?.role));

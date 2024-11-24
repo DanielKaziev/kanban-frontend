@@ -52,6 +52,10 @@ export const tokenApi = createApi({
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useRefreshQuery } =
-  tokenApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useLogoutMutation,
+  useRefreshQuery,
+} = tokenApi;
 export default tokenApi;

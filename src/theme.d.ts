@@ -43,7 +43,7 @@ declare module "@mui/material/styles" {
           textTransform?: "none" | "capitalize" | "uppercase" | "lowercase";
         };
       };
-    }
+    };
   }
   // allow configuration using `createTheme`
   interface ThemeOptions {
@@ -89,6 +89,6 @@ declare module "@mui/material/styles" {
           textTransform?: "none" | "capitalize" | "uppercase" | "lowercase";
         };
       };
-    }
+    };
   }
 }
