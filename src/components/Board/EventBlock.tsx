@@ -1,14 +1,25 @@
-import { FC } from "react";
-import { Divider, Paper, Stack, styled, Typography } from "@mui/material";
+import { FC, useState } from "react";
+import {
+  Button,
+  Divider,
+  Paper,
+  Stack,
+  styled,
+  Typography,
+} from "@mui/material";
 import { IEvent } from "../../types/events";
-import { useGetEventTasksListQuery } from "../../services/events";
-import TaskBlock from "./TaskBlock";
+import {
+  useCreateTaskMutation,
+  useGetEventTasksListQuery,
+} from "../../services/events";
+import TaskBlock, { TaskBox } from "./TaskBlock";
+import CreateTaskModal from "./CreateTaskModal";
 
 interface EventBlockProps {
   event: IEvent;
 }
 
-const StyledEventBlock = styled(Paper)(({ theme }) => ({
+export const StyledEventBlock = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
   width: 300,
   minWidth: 300,
@@ -36,8 +47,40 @@ const TaskList = styled(Stack)(({ theme }) => ({
   },
 }));
 
+const AddTaskButton = styled(Button)(({ theme }) => ({
+  opacity: 0,
+  transition: "opacity 0.2s",
+  // alignSelf: "center",
+  marginTop: theme.spacing(1),
+  "&:hover": {
+    opacity: 1,
+  },
+}));
+
 const EventBlock: FC<EventBlockProps> = ({ event }) => {
-  const { data } = useGetEventTasksListQuery(event.id);
+  const { data, refetch } = useGetEventTasksListQuery(event.id);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
+
+  const [createTask, { isLoading }] = useCreateTaskMutation();
+
+  const handleCreateEvent = async (payload: any) => {
+    if (!event.id) return;
+
+    try {
+      await createTask({
+        name: payload.name,
+        description: payload.description,
+        eventId: event.id,
+      }).unwrap();
+      refetch();
+      handleCloseModal();
+    } catch (error) {
+      console.error("Ошибка при создании события:", error);
+    }
+  };
 
   return (
     <StyledEventBlock>
@@ -47,11 +90,20 @@ const EventBlock: FC<EventBlockProps> = ({ event }) => {
       <Divider />
       <TaskList spacing={2}>
         {data && data.map((task) => <TaskBlock key={task.id} task={task} />)}
+        <AddTaskButton onClick={handleOpenModal}>
+          Добавить задание
+        </AddTaskButton>
       </TaskList>
       <Divider />
       <Typography variant="caption" marginTop={1}>
         Обновлено: {new Date(event.updatedAt).toLocaleDateString()}
       </Typography>
+      <CreateTaskModal
+        onCreate={handleCreateEvent}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        eventId={event.id}
+      />
     </StyledEventBlock>
   );
 };

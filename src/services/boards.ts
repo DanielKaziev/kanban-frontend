@@ -22,6 +22,16 @@ export const boardsApi = createApi({
         method: "POST",
       }),
     }),
+    createEvent: builder.mutation<IBoard, { name: string; boardId: string }>({
+      query: ({ name, boardId }: { name: string; boardId: string }) => ({
+        url: `${ENDPOINT}/${boardId}/events`,
+        body: {
+          name: name,
+          order: 1,
+        },
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -29,6 +39,7 @@ export const {
   useGetOwnBoardsListQuery,
   useCreateBoardMutation,
   useGetBoardEventsByidListQuery,
+  useCreateEventMutation,
 } = boardsApi;
 
 export default boardsApi;

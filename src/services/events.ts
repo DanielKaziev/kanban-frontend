@@ -13,9 +13,30 @@ export const eventsApi = createApi({
     getEventTasksList: builder.query<Array<ITask>, string>({
       query: (boardId: string) => `${ENDPOINT}/${boardId}/tasks`,
     }),
+    createTask: builder.mutation<
+      IBoard,
+      { name: string; description: string; eventId: string }
+    >({
+      query: ({
+        name,
+        description,
+        eventId,
+      }: {
+        name: string;
+        description: string;
+        eventId: string;
+      }) => ({
+        url: `${ENDPOINT}/${eventId}/tasks`,
+        body: {
+          name: name,
+          description: description,
+        },
+        method: "POST",
+      }),
+    }),
   }),
 });
 
-export const { useGetEventTasksListQuery } = eventsApi;
+export const { useGetEventTasksListQuery, useCreateTaskMutation } = eventsApi;
 
 export default eventsApi;

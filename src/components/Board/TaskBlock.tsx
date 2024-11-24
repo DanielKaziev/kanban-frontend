@@ -7,7 +7,7 @@ interface TaskBlockProps {
 }
 
 // Основной стиль для задачи
-const TaskBox = styled(Paper)(({ theme }) => ({
+export const TaskBox = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
   backgroundColor: theme.palette.grey[100],
   borderRadius: theme.shape.borderRadius,

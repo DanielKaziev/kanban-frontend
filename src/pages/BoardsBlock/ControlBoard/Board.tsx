@@ -1,9 +1,27 @@
-import { Box, Paper, Stack, styled, TextField, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Modal,
+  Paper,
+  Stack,
+  styled,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import Page from "../../../components/Page";
-import { useGetBoardEventsByidListQuery } from "../../../services/boards";
-import EventBlock from "../../../components/Board/EventBlock";
+import {
+  useGetBoardEventsByidListQuery,
+  useCreateEventMutation,
+} from "../../../services/boards";
+import EventBlock, {
+  StyledEventBlock,
+} from "../../../components/Board/EventBlock";
 import NoContent from "../../../components/NoContent";
+import { useState } from "react";
+import CreateEventModal from "../../../components/Board/CreateEventModal";
 
 // Стили для горизонтального скролла
 const HorizontalScroll = styled(Stack)(({ theme }) => ({
@@ -21,11 +39,39 @@ const HorizontalScroll = styled(Stack)(({ theme }) => ({
   },
 }));
 
+const ModalContent = styled(Paper)(({ theme }) => ({
+  width: "400px",
+  padding: theme.spacing(3),
+  margin: "auto",
+  borderRadius: "8px",
+  boxShadow: theme.shadows[5],
+}));
+
 const BoardsList = () => {
   const navigate = useNavigate();
   const { boardId } = useParams();
   const theme = useTheme();
-  const { data } = useGetBoardEventsByidListQuery(boardId ?? "");
+  const { data, refetch } = useGetBoardEventsByidListQuery(boardId ?? "");
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [eventName, setEventName] = useState("");
+  const [eventOrder, setEventOrder] = useState("");
+  const [createEvent, { isLoading }] = useCreateEventMutation();
+
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
+
+  const handleCreateEvent = async (payload: any) => {
+    if (!boardId) return;
+
+    try {
+      await createEvent({ name: payload.name, boardId: boardId }).unwrap();
+      refetch();
+      handleCloseModal();
+    } catch (error) {
+      console.error("Ошибка при создании события:", error);
+    }
+  };
 
   return (
     <Page noSpacing>
@@ -36,12 +82,8 @@ const BoardsList = () => {
             direction="row"
             sx={{ p: "16px", alignItems: "center" }}
           >
-            <TextField
-              sx={{ flexGrow: 1 }}
-              label="Поиск доски..."
-              size="small"
-              variant="outlined"
-            />
+            <Stack flexGrow={1} />
+            <Button onClick={handleOpenModal}>Добавить событие</Button>
           </Stack>
         </Paper>
       </Box>
@@ -50,6 +92,12 @@ const BoardsList = () => {
         {data &&
           data.map((event) => <EventBlock key={event.id} event={event} />)}
       </HorizontalScroll>
+      <CreateEventModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onCreate={handleCreateEvent}
+        isLoading={false}
+      />
     </Page>
   );
 };
