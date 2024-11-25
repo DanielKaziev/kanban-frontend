@@ -8,7 +8,6 @@ import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied
 const NoContentIcon = styled(Box)(({ theme }) => ({
   color: theme.palette.text.secondary,
   fontSize: "48px",
-  marginBottom: "16px",
 }));
 
 const NoContentText = styled(Typography)(({ theme }) => ({

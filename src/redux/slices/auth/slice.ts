@@ -21,15 +21,14 @@ const writeTokenReducer = (
 ) => {
   localStorage.setItem("accessToken", payload.accessToken);
   localStorage.setItem("refreshToken", payload.refreshToken);
-  const token = payload.accessToken
+  const token = payload.accessToken;
   const userData = jwtDecode(token) as IUserData;
-  
+
   Object.keys(DEFAULT).forEach((key) => {
     state[key] = userData[key];
   });
-  
-  state.isAuth = true
 
+  state.isAuth = true;
 };
 
 export const slice = createSlice({

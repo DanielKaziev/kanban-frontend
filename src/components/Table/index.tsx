@@ -10,7 +10,7 @@ import { TTableData } from "./types";
 
 const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
   maxWidth: "1040px",
-  backgroundColor: "white"
+  backgroundColor: "white",
 }));
 
 type TTableProps = {

@@ -3,7 +3,7 @@ import { alpha, styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 
 export interface IPageProps {
-  fullHeight?: boolean;
+  noSpacing?: boolean;
 }
 
 const PageContainer = styled(Stack)(({ theme }) => ({
@@ -12,8 +12,8 @@ const PageContainer = styled(Stack)(({ theme }) => ({
   overflow: "auto",
 }));
 
-const Page = ({ children }: PropsWithChildren<IPageProps>) => (
-  <PageContainer spacing={3}>{children}</PageContainer>
+const Page = ({ children, noSpacing }: PropsWithChildren<IPageProps>) => (
+  <PageContainer spacing={noSpacing ? 0 : 3}>{children}</PageContainer>
 );
 
 export default Page;

@@ -6,7 +6,7 @@ import useAuthorized from "../../hooks/useAuthorized";
 
 const App = () => {
   const navigate = useNavigate();
-  const isAuth = useAuthorized()
+  const isAuth = useAuthorized();
 
   useEffect(() => {
     if (!isAuth) {

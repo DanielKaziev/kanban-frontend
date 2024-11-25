@@ -15,7 +15,7 @@ const PATHS: Array<TPathEntry> = [
     component: LazyBoards,
     path: "/home",
     roles: [],
-  }
+  },
 ];
 
 export default PATHS;

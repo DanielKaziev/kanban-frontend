@@ -13,8 +13,16 @@ const baseReauthQuery: BaseQueryFn<
   let result = await baseAppQuery(args, api, extraOptions);
 
   if (result.error && result.error.status === 401) {
+    const rToken = localStorage.getItem("refreshToken");
     const refreshResult = await baseAuthQuery(
-      "/auth/refresh",
+      {
+        url: "/auth/refresh",
+        method: "GET",
+        body: { refreshToken: rToken || "" },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
       api,
       extraOptions
     );
