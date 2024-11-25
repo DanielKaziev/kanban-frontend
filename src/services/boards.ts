@@ -12,6 +12,9 @@ export const boardsApi = createApi({
     getOwnBoardsList: builder.query<Array<IBoard>, any>({
       query: () => `${ENDPOINT}/own`,
     }),
+    getBoardById: builder.query<IBoard, string>({
+      query: (id: string) => `${ENDPOINT}/${id}`,
+    }),
     getBoardEventsByidList: builder.query<Array<IEvent>, string>({
       query: (boardId: string) => `${ENDPOINT}/${boardId}/events`,
     }),
@@ -32,6 +35,13 @@ export const boardsApi = createApi({
         method: "POST",
       }),
     }),
+    updateTaskEvent: builder.mutation({
+      query: ({ taskId, newEventId }) => ({
+        url: `/tasks/${taskId}/move`,
+        method: "PATCH",
+        body: { target: newEventId },
+      }),
+    }),
   }),
 });
 
@@ -39,7 +49,9 @@ export const {
   useGetOwnBoardsListQuery,
   useCreateBoardMutation,
   useGetBoardEventsByidListQuery,
+  useUpdateTaskEventMutation,
   useCreateEventMutation,
+  useGetBoardByIdQuery,
 } = boardsApi;
 
 export default boardsApi;

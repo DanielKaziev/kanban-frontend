@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import {
   Button,
   Divider,
@@ -14,6 +14,7 @@ import {
 } from "../../services/events";
 import TaskBlock, { TaskBox } from "./TaskBlock";
 import CreateTaskModal from "./CreateTaskModal";
+import { Draggable } from "react-beautiful-dnd";
 
 interface EventBlockProps {
   event: IEvent;
@@ -23,6 +24,7 @@ export const StyledEventBlock = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
   width: 300,
   minWidth: 300,
+  flexGrow: 1,
   maxWidth: 300,
   marginRight: theme.spacing(2),
   backgroundColor: theme.palette.background.paper,
@@ -50,7 +52,6 @@ const TaskList = styled(Stack)(({ theme }) => ({
 const AddTaskButton = styled(Button)(({ theme }) => ({
   opacity: 0,
   transition: "opacity 0.2s",
-  // alignSelf: "center",
   marginTop: theme.spacing(1),
   "&:hover": {
     opacity: 1,
@@ -89,7 +90,20 @@ const EventBlock: FC<EventBlockProps> = ({ event }) => {
       </Typography>
       <Divider />
       <TaskList spacing={2}>
-        {data && data.map((task) => <TaskBlock key={task.id} task={task} />)}
+        {data &&
+          data.map((task, index) => (
+            <Draggable key={task.id} draggableId={task.id} index={index}>
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                >
+                  <TaskBlock task={task} />
+                </div>
+              )}
+            </Draggable>
+          ))}
         <AddTaskButton onClick={handleOpenModal}>
           Добавить задание
         </AddTaskButton>
@@ -109,3 +123,46 @@ const EventBlock: FC<EventBlockProps> = ({ event }) => {
 };
 
 export default EventBlock;
+
+// import React from "react";
+// import { Paper, Stack, Typography, Divider } from "@mui/material";
+// import { Draggable } from "react-beautiful-dnd";
+// import TaskBlock from "./TaskBlock";
+// import { IEvent } from "../../types/events";
+// import { useGetEventTasksListQuery } from "../../services/events";
+
+// interface EventBlockProps {
+//   event: IEvent;
+// }
+
+// const EventBlock: React.FC<EventBlockProps> = ({ event }) => {
+//   const { data, refetch } = useGetEventTasksListQuery(event.id);
+
+//   return (
+//     <Paper elevation={3} sx={{ padding: 2, width: 300 }}>
+//       <Typography variant="h6">{event.name}</Typography>
+//       <Divider sx={{ marginY: 2 }} />
+//       <Stack spacing={1}>
+//         {data && data.map((task, index) => (
+//           <Draggable
+//             key={task.id}
+//             draggableId={task.id}
+//             index={index}
+//           >
+//             {(provided) => (
+//               <div
+//                 ref={provided.innerRef}
+//                 {...provided.draggableProps}
+//                 {...provided.dragHandleProps}
+//               >
+//                 <TaskBlock task={task} />
+//               </div>
+//             )}
+//           </Draggable>
+//         ))}
+//       </Stack>
+//     </Paper>
+//   );
+// };
+
+// export default EventBlock;

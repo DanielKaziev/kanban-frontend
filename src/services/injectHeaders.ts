@@ -9,8 +9,8 @@ export function injectToken(
   if (accessToken) {
     headers.set("Authorization", `Bearer ${accessToken}`);
   }
-  // if (refreshToken) {
-  //   headers.set("Refresh-Token", refreshToken);
-  // }
+  if (refreshToken) {
+    headers.set("Refresh-Token", refreshToken);
+  }
   return headers;
 }

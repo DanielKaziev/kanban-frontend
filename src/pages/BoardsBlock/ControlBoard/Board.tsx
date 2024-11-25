@@ -1,29 +1,28 @@
+import React, { useState } from "react";
 import {
   Box,
   Button,
-  Divider,
-  Modal,
   Paper,
   Stack,
   styled,
-  TextField,
   Typography,
   useTheme,
 } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
-import Page from "../../../components/Page";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import {
-  useGetBoardEventsByidListQuery,
   useCreateEventMutation,
+  useGetBoardByIdQuery,
+  useGetBoardEventsByidListQuery,
+  useUpdateTaskEventMutation,
 } from "../../../services/boards";
-import EventBlock, {
-  StyledEventBlock,
-} from "../../../components/Board/EventBlock";
+import EventBlock from "../../../components/Board/EventBlock";
 import NoContent from "../../../components/NoContent";
-import { useState } from "react";
 import CreateEventModal from "../../../components/Board/CreateEventModal";
+import { useParams } from "react-router-dom";
+import Page from "../../../components/Page";
+import { useDispatch } from "react-redux";
+import eventsApi from "../../../services/events";
 
-// Стили для горизонтального скролла
 const HorizontalScroll = styled(Stack)(({ theme }) => ({
   flexDirection: "row",
   overflowX: "auto",
@@ -39,27 +38,37 @@ const HorizontalScroll = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const ModalContent = styled(Paper)(({ theme }) => ({
-  width: "400px",
-  padding: theme.spacing(3),
-  margin: "auto",
-  borderRadius: "8px",
-  boxShadow: theme.shadows[5],
-}));
-
 const BoardsList = () => {
-  const navigate = useNavigate();
-  const { boardId } = useParams();
   const theme = useTheme();
-  const { data, refetch } = useGetBoardEventsByidListQuery(boardId ?? "");
+  const { boardId } = useParams();
+  const { data: events, refetch } = useGetBoardEventsByidListQuery(
+    boardId ?? ""
+  );
+  const { data: board } = useGetBoardByIdQuery(boardId ?? "");
+  const [updateTaskEvent] = useUpdateTaskEventMutation();
+  const dispath = useDispatch();
 
   const [isModalOpen, setModalOpen] = useState(false);
-  const [eventName, setEventName] = useState("");
-  const [eventOrder, setEventOrder] = useState("");
-  const [createEvent, { isLoading }] = useCreateEventMutation();
-
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);
+  const [createEvent, { isLoading }] = useCreateEventMutation();
+
+  const onDragEnd = async (result: any) => {
+    const { source, destination, draggableId } = result;
+
+    if (!destination || source.droppableId === destination.droppableId) return;
+
+    try {
+      await updateTaskEvent({
+        taskId: draggableId,
+        newEventId: destination.droppableId,
+      }).unwrap();
+      refetch();
+      dispath(eventsApi.util.resetApiState());
+    } catch (error) {
+      console.error("Ошибка при обновлении задачи:", error);
+    }
+  };
 
   const handleCreateEvent = async (payload: any) => {
     if (!boardId) return;
@@ -75,22 +84,57 @@ const BoardsList = () => {
 
   return (
     <Page noSpacing>
-      <Box px={theme.spacing(1)}>
-        <Paper elevation={2} sx={{ borderRadius: "8px", mb: 2 }}>
-          <Stack
-            spacing={2}
-            direction="row"
-            sx={{ p: "16px", alignItems: "center" }}
-          >
-            <Stack flexGrow={1} />
-            <Button onClick={handleOpenModal}>Добавить событие</Button>
-          </Stack>
-        </Paper>
-      </Box>
+      <Paper elevation={2} sx={{ borderRadius: "8px", mb: 2 }}>
+        <Stack
+          spacing={2}
+          direction="row"
+          sx={{ p: "16px", alignItems: "center" }}
+        >
+          {board && (
+            <>
+              {" "}
+              <Typography
+                variant="h1"
+                sx={{ fontSize: "1.5rem", fontWeight: 500 }}
+              >
+                {board.name}
+              </Typography>
+              <Typography
+                variant="body1"
+                style={{
+                  color: board.isPrivate ? "#d84315" : "#388e3c",
+                  fontWeight: 500,
+                }}
+              >
+                {board.isPrivate ? "Приватная" : "Публичная"}
+              </Typography>
+            </>
+          )}
+          <Stack flexGrow={1} />
+          <Button onClick={handleOpenModal}>Добавить событие</Button>
+        </Stack>
+      </Paper>
       <HorizontalScroll>
-        {data && data?.length < 1 && <NoContent />}
-        {data &&
-          data.map((event) => <EventBlock key={event.id} event={event} />)}
+        <DragDropContext onDragEnd={onDragEnd}>
+          {events && events.length > 0 ? (
+            events.map((event) => (
+              <Droppable key={event.id} droppableId={event.id}>
+                {(provided) => (
+                  <Stack
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    style={{ marginRight: theme.spacing(2), height: "100%" }}
+                  >
+                    <EventBlock event={event} />
+                    {provided.placeholder}
+                  </Stack>
+                )}
+              </Droppable>
+            ))
+          ) : (
+            <NoContent />
+          )}
+        </DragDropContext>
       </HorizontalScroll>
       <CreateEventModal
         isOpen={isModalOpen}
